@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>당신이 업로드한 동영상들 입니다.</h1>
+<br>
+
+<table class="table table-bordered table-condensed table-striped">
+
+    <thead>
+        <tr class="table-warning">
+            <th>Title</th>
+            <th>Video</th>
+            <th>Thumbnail</th>
+            <th>Owner</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in object_list %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td><video src="{{ item.video.url }}" controls autoplay width="160" height="90"></video></td>
+            <td><img src="{{ item.thumbnail.url }}" width="160" height="90"></td>
+            <td>{{ item.owner }}</td>
+            <td><a href="{% url 'youtube:update' item.id %}">Update</a></td>
+            <td><a href="{% url 'youtube:delete' item.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}

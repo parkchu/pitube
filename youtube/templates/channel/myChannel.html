@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div>
+    <div>
+        <img class="" src="{{ channel.channel_photo.url }}" alt="" width="80" height="80">
+    </div>
+    <div>
+        <span class="font-weight-bold">{{ channel.name }}</span>
+        <p>구독자 {{ channel.total_subscribe }}명</p>
+    </div>
+    <span><a href="{% url 'youtube:update_channel' channel.id %}">채널 수정 /</a></span>
+    <span><a href="{% url 'youtube:delete_channel' channel.id %}">채널 삭제</a></span>
+</div>
+<div class="mrg-top-20">
+    <h3 class="text-bold height-40px">업로드한 동영상</h3>
+</div>
+
+<div class="row pdd-horizon-10">
+{% for video in video %}
+    <div class="col-lg-2 padding-2">
+        <div class="card bg-transparent no-border">
+            <div class="card-media">
+                <a href="{% url 'youtube:playVideo' video.id %}">
+                <img class="img-responsive" src="{{ video.thumbnail.url }}" alt="" width="160" height="90">
+                </a>
+            </div>
+            <div class="card-block padding-10">
+                <h5 class="mrg-btm-10 no-mrg-top text-bold font-size-14 ls-0">{{ video.title }}</h5>
+                <span class="font-size-13">{{ video.owner }}</span>
+                <div class="font-size-13">
+                    <span>조회수 보류</span>
+                    <span> · </span>
+                    <span>보류</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
