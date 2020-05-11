@@ -11,7 +11,7 @@ function handleLike(event){
     if (like_btn.innerText == "좋아요") {
         like_span.innerText = parseInt(like_span.innerText) + 1
         like_btn.innerText = "좋아요 취소"
-        fetch(`http://localhost:1204/video/${video_id}/`, {
+        fetch(`/video/${video_id}/`, {
         method: 'PUT',
         body: JSON.stringify({
             user_id: user_id,

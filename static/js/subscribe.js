@@ -17,7 +17,7 @@ function handleSub(event) {
         total_sub.innerText = `구독자 ${total_subscribe - 1}명`
         total_sub.classList.remove(total_subscribe)
         total_sub.classList.add(total_subscribe - 1)
-        fetch(`http://localhost:1204/channel/${channel_id}/`, {
+        fetch(`/channel/${channel_id}/`, {
         method: 'PUT',
         body: JSON.stringify({
             user_id: thisUser,
