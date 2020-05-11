@@ -63,24 +63,6 @@ class DeleteVideo(OwnerOnlyMixin, DeleteView):
     model = Video
     success_url = reverse_lazy('home')
 
-def good(request, pk):
-    user = request.user
-    video = Video.objects.get(pk=pk)
-    if video.good.filter(id = user.id).exists():
-        video.good.remove(user)
-
-    else:
-        video.good.add(user)
-    return HttpResponseRedirect(request.GET.get('next'))
-
-def Subscribe(request, pk):
-    user = request.user
-    channel = Channel.objects.get(pk=pk)
-    if channel.subscribe.filter(id=user.id).exists():
-        channel.subscribe.remove(user)
-    else:
-        channel.subscribe.add(user)
-    return HttpResponseRedirect(request.GET.get('next'))
 
 class addChannel(LoginRequiredMixin, CreateView):
     model = Channel

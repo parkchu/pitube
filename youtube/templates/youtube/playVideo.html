@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block video %}
 
 
@@ -11,35 +11,31 @@
         </div>
     </div>
 </div>
-<div>
+<div class="like" id="{{ user.id }}">
     <h5 class="navbar-brand">{{ object.title }}</h5>
     <br>
     <span>조회수(보류)</span>
     <span>·</span>
     <span>날짜(보류)</span>
-    {% if user.is_active and not object.whether %}
-    <button type="submit" onclick="location.href='{% url 'youtube:good' object.id %}?next={% url 'youtube:playVideo' object.id %}'" id="like_btn">좋아요누름</button>
-    {% elif user.is_active and object.whether %}
-    <button type="submit" onclick="location.href='{% url 'youtube:good' object.id %}?next={% url 'youtube:playVideo' object.id %}'">좋아요</button>
-    {% else %}
-    <a href="{% url 'login' %}?next={% url 'youtube:playVideo' object.id %}"><button type="submit">좋아요</button></a>
-    {% endif %}
-    <span>{{ object.total_good }}</span>
+    <a class="like-a">
+        <button class="like-btn" id="{{ video.id }}"></button>
+    </a>
+    <span class="total-good"></span>
 </div>
 <br/>
-<div>
+<div class="sub">
     <a href="{% url 'youtube:someoneChannel' channel.id %}">
         <img class="profile-img img-fluid" src="{{ channel.channel_photo.url }}" alt="">
         <span>{{ channel.name }}</span>
     </a>
-    {% if user == channel.owner %}
-    {% elif user.is_active and not channel.whether %}
-    <button type="submit" onclick="location.href='{% url 'youtube:subscribe' channel.id %}?next={% url 'youtube:playVideo' object.id %}'">구독</button>
-    {% elif user.is_active and channel.whether %}
-    <button type="submit" onclick="location.href='{% url 'youtube:subscribe' channel.id %}?next={% url 'youtube:playVideo' object.id %}'">구독중</button>
-    {% else %}
-    <a href="{% url 'login' %}?next={% url 'youtube:playVideo' object.id %}"><button type="submit">구독</button></a>
-    {% endif %}
-    <span>구독자 {{ channel.total_subscribe }}명</span>
+    <a class="sub-a">
+        <button class="sub-btn" value="{{ channel.id }}"></button>
+    </a>
+    <span class="total-sub"></span>
 </div>
+{% endblock %}
+
+{% block extra-script %}
+<script src="{% static 'js/liker.js' %}"></script>
+<script src="{% static 'js/subscribe.js' %}"></script>
 {% endblock %}

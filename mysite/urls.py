@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
-from mysite.views import UserCreateView, UserCreateDoneTV
+from .views import UserCreateView, UserCreateDoneTV
+from APIServer.views import channel_list, video_list, channel, video
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +28,11 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register/', UserCreateView.as_view(), name='register'),
-    path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done')
+    path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
+    path('channel/', channel_list),
+    path('channel/<int:pk>/', channel),
+    path('video/', video_list),
+    path('video/<int:pk>/', video),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
