@@ -64,10 +64,14 @@
                         <i class="material-icons">apps</i>
                     </a>
                 </li>
-                <li>
-                    <a class="pointer">
-                        <i class="material-icons">notifications</i>
-                    </a>
+                <li class="bell">
+                    <div class="dropdown">
+                        <a class="pointer btn dropdown-toggle" data-toggle="dropdown">
+                            <i class="material-icons">notifications</i>
+                        </a>
+                        <div class="dropdown-menu">
+                        </div>
+                    </div>
                 </li>
                 <li class="user-profile">
                     {% if user.is_active %}
@@ -178,6 +182,27 @@
         event.preventDefault()
         document.querySelector(".app").classList.toggle("is-collapsed")
     }
+</script>
+<script>
+    const li = document.querySelector(".bell")
+    const div = li.querySelector(".dropdown-menu")
+    console.log(div)
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/pitube/');
+
+    chatSocket.onmessage = function(e) {
+        const a = document.createElement("a")
+        var data = JSON.parse(e.data);
+        var title = data['title']
+        a.classList.add("dropdown-item")
+        a.href = '/pitube/video_str/' + title + '/'
+        a.innerText = title
+        console.log(a)
+        div.appendChild(a)
+    }
+
+    {% block bell %}{% endblock %}
 </script>
 {% block extra-script %}{% endblock %}
 </body>

@@ -16,7 +16,7 @@
         <div class="form-group row">
             {{ form.title|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
             <div class="col-sm-5">
-                {{ form.title|add_class:"form-control"|attr:"autofocus" }}
+                {{ form.title|add_class:"form-control title"|attr:"autofocus" }}
             </div>
         </div>
 
@@ -36,9 +36,27 @@
 
         <div class="form-group">
             <div class="offset-sm-2 col-sm-5">
-                <input type="submit" value="업로드" class="btn btn-info"/>
+                <input type="submit" value="업로드" class="btn btn-info video-submit"/>
             </div>
         </div>
     </form>
+
+{% endblock %}
+
+{% block bell %}
+const form = document.querySelector(".card")
+const title = form.querySelector(".title")
+const btn = document.querySelector(".video-submit")
+
+btn.onkeyup = function(e){
+    if (e.keyCode === 13) {
+        btn.click();
+    }
+};
+btn.onclick = function(e) {
+    chatSocket.send(JSON.stringify({
+        'title': title.value
+    }));
+};
 
 {% endblock %}

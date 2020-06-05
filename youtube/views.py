@@ -125,3 +125,8 @@ class VideoList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Video.objects.filter(owner=self.request.user)
+
+def seeVideo(request, title):
+    video = Video.objects.get(title=title)
+    video_id = int(video.id)
+    return HttpResponseRedirect(reverse('youtube:playVideo', args=(video_id,)))

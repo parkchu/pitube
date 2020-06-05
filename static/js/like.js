@@ -25,7 +25,7 @@ function handleLike(event){
     } else {
         like_span.innerText = parseInt(like_span.innerText) - 1
         like_btn.innerText = '좋아요'
-        fetch(`http://localhost:1204/video/${video_id}/`, {
+        fetch(`/video/${video_id}/`, {
         method: 'PUT',
         body: JSON.stringify({
             user_id: user_id,
@@ -55,7 +55,7 @@ function init(){
     if (like_div.id != 'None') {
         like_btn.addEventListener("click", handleLike)
     }
-    fetch(`http://localhost:1204/video/${video_id}/`).then(function(json){
+    fetch(`/video/${video_id}/`).then(function(json){
         return json.json()
         }).then(function(obj){
         video = obj
